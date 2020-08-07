@@ -68,13 +68,19 @@ def slavePodTemplate = """
           dir('deployments/terraform') {
             println("Generate Variables")
             def deployment_configuration_tfvars = """   
+            println("1")
             environment = "${environment}" 
+            println("2")
             ami= "${ami_id}"
+            println("3")
             Name= "${Name}"
-            """.stripIndent()                      
+            println("4")
+            """.stripIndent()   
+            println("5")                   
             writeFile file: 'deployment_configuration.tfvars', text: "${deployment_configuration_tfvars}"  
+            println("6")
             sh 'cat deployment_configuration.tfvars >> dev.tfvars'         
-            
+            println("successfull")
           }   
         }
         
