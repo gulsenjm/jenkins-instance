@@ -96,9 +96,9 @@ def slavePodTemplate = """
                                 println("Applying the changes")
                                 sh """
                                 #!/bin/bash
-                                export AWS_DEFAULT_REGION=${aws_region}    
+                                export AWS_DEFAULT_REGION=${params.aws_region}    
                                 source ./setenv.sh dev.tfvars   
-                                TF_LOG=${terraform_logs} terraform apply -auto-approve -var-file \$DATAFILE
+                                TF_LOG=${params.terraform_logs} terraform apply -auto-approve -var-file \$DATAFILE
                                 """                         
                             } 
                               else {
@@ -109,7 +109,7 @@ def slavePodTemplate = """
                                   ls -l
                                   export AWS_DEFAULT_REGION=${aws_region}
                                   source ./setenv.sh dev.tfvars
-                                  TF_LOG=${terraform_logs} terraform plan -var-file \$DATAFILE
+                                  TF_LOG=${params.terraform_logs} terraform plan -var-file \$DATAFILE
                                   """
                               }
                         }
