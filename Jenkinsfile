@@ -86,9 +86,9 @@ def slavePodTemplate = """
         
         container("buildtools") {               
             dir('deployments/terraform') {      
-               withCredentials([usernamePassword(credentialsId: "aws-access-${Environments}",   
+               withCredentials([usernamePassword(credentialsId: "aws-access-${environment}",   
                   passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {    
-                  println("Selected cred is: aws-access-${Environments}")
+                  println("Selected cred is: aws-access-${environment}")
                     stage("Terraform Apply/plan") {
                         if (!params.terraformDestroy) {     
                             if (params.terraformApply) {        
