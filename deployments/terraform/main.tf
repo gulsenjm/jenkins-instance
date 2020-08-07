@@ -1,16 +1,9 @@
-provider "aws" {
-  version = "2.59"
-  region = "us-east-1"                                                             
-}
+provider "aws" {}
+resource "aws_instance" "jenkins" {
+    ami = "ami-08f3d892de259504d"
+    instance_type = "t2.micro"
 
-resource "aws_instance" "jenkins" {               
-   
-  ami = "${var.ami}"
-  instance_type = "t2.micro"
-  tags = {
-    Name = "${var.Name}"
-  }
+    tags = {
+      Name = "Jenkins"
+    }
 }
-
-variable "ami"{}
-variable "Name"{}
