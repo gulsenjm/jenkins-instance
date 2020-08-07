@@ -89,26 +89,27 @@ def slavePodTemplate = """
                withCredentials([usernamePassword(credentialsId: "aws-access-${environment}",   
                   passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {    
                   println("Selected cred is: aws-access-${environment}")
+                    
                     stage("Terraform Apply/plan") {
                         if (!params.terraformDestroy) {     
                             if (params.terraformApply) {        
                                 println("Applying the changes")
                                 sh """
                                 #!/bin/bash
-                                export AWS_DEFAULT_REGION=${params.aws_region}    
-                                source ./setenv.sh dev.tfvars   //creating backend.tf based on your configuration
-                                TF_LOG=${params.terraform_logs} terraform apply -auto-approve -var-file \$DATAFILE
+                                export AWS_DEFAULT_REGION=${aws_region}    
+                                source ./setenv.sh dev.tfvars   
+                                TF_LOG=${terraform_logs} terraform apply -auto-approve -var-file \$DATAFILE
                                 """                         
                             } 
                               else {
                                   println("Planing the changes")
                                   sh """
                                   #!/bin/bash
-                                  set +ex     // means whatever command you are running show me in console 
+                                  set +ex     
                                   ls -l
                                   export AWS_DEFAULT_REGION=${aws_region}
                                   source ./setenv.sh dev.tfvars
-                                  TF_LOG=${params.terraform_logs} terraform plan -var-file \$DATAFILE
+                                  TF_LOG=${terraform_logs} terraform plan -var-file \$DATAFILE
                                   """
                               }
                         }
@@ -121,7 +122,7 @@ def slavePodTemplate = """
                             #!/bin/bash
                             export AWS_DEFAULT_REGION=${params.aws_region}
                             source ./setenv.sh dev.tfvars                               
-                            TF_LOG=${params.terraform_logs} terraform destroy -auto-approve -var-file \$DATAFILE  //TF_LOG added here 
+                            TF_LOG=${params.terraform_logs} terraform destroy -auto-approve -var-file \$DATAFILE  
                             """
                         }
                           else {
