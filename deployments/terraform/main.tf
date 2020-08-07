@@ -1,6 +1,6 @@
 provider "aws" {
   version = "2.59"
-  region = "us-east-1"                                                              when we pramatirized region we dont need this line 
+  region = "us-east-1"                                                             
 }
 
 resource "aws_instance" "jenkins" {               
